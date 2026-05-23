@@ -10,6 +10,8 @@ import shutil
 import os
 from pathlib import Path
 
+from server.app.agent import create_agent
+
 from .rag import create_chain
 
 app = FastAPI(
@@ -23,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+agent = create_agent()
 
 qa_chain = create_chain()
 
@@ -51,6 +55,23 @@ def ask_question(request: QueryRequest):
             for doc in response["source_documents"]
         ]
     }
+
+
+class Query(BaseModel):
+    question: str
+
+
+@app.post("/agentask")
+def ask(q: Query):
+
+    response = agent.run(q.question)
+
+    return {
+        "question": q.question,
+        "answer": response
+    }
+
+
 
 @app.post("/upload")
 async def upload_pdf(
