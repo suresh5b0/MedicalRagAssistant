@@ -1,0 +1,40 @@
+fastapi
+uvicorn
+fastmcp
+python-multipart
+
+langchain
+langchain-community
+langchain-core
+langchain-ollama
+ollama
+
+pinecone
+
+
+langchain-google-genai
+
+pyPDF
+
+Python-dotenv
+pydantic
+requests
+tqdm
+
+loguru
+
+faiss-cpu 
+pypdf 
+sentence-transformers
+
+# uv pip install -r requirements.txt
+# uv add langchain-text-splitters
+# pip install langchain-text-splitters
+
+# python -m app.ingest
+
+# uvicorn app.main:app --reload
+
+# uvicorn app.main:app --reload
+
+# docker-compose up --build -d

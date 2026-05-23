@@ -1,0 +1,7 @@
+streamlit 
+requests
+
+
+# uv pip install -r requirements.txt
+
+# streamlit run client/app.py 

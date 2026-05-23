@@ -1,6 +1,11 @@
 import streamlit as st
 
 import requests
+import os
+
+# API_URL = os.getenv("API_URL", "http://localhost:8000")
+
+# f"{API_URL}/ask"
 
 st.set_page_config(
     page_title="Medical AI Assistant",
@@ -8,7 +13,42 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🏥 Medical AI Assistant")
+def clean_text(text):
+    return text.replace("□", "-").replace("•", "-")
+
+#st.title("🏥 Medical AI Assistant")
+
+st.markdown('<div class="big-title">🏥 Medical AI Assistant</div>', unsafe_allow_html=True)
+
+# ✅ UI STYLING
+st.markdown("""
+<style>
+html, body, [class*="css"]  {
+    font-family: 'Arial';
+}
+
+.big-title {
+    font-size: 34px;
+    font-weight: bold;
+    color: #2E86C1;
+}
+
+.answer-box {
+    background-color: #f4f6f7;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #111;
+    white-space: pre-wrap;
+}
+
+.error-box {
+    color: red;
+    font-weight: bold;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.write(
     "Ask questions from your medical PDFs using local AI"
@@ -77,11 +117,11 @@ if st.button("Ask AI"):
 
                     st.subheader("AI Answer")
 
-                    st.write(data["answer"])
+                    st.write(clean_text(data["answer"]))
 
-                    st.subheader("Sources")
+                    # st.subheader("Sources")
 
-                    st.json(data["sources"])
+                    # st.json(data["sources"])
                 else:
                     st.error(f"Server error: {response.status_code}")
             except Exception as e:

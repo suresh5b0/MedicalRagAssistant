@@ -56,27 +56,15 @@ def ask_question(request: QueryRequest):
 async def upload_pdf(
     file: UploadFile = File(...)
 ):
-    try:
-        # Get the directory where this file is located
-        app_dir = Path(__file__).parent.parent
-        upload_dir = app_dir / "data" / "medical_docs"
-        
-        # Create directory if it doesn't exist
-        upload_dir.mkdir(parents=True, exist_ok=True)
-        
-        file_path = upload_dir / file.filename
-        
-        # Save the file
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(
-                file.file,
-                buffer
-            )
-        
-        return {
-            "message": f"{file.filename} uploaded successfully"
-        }
-    except Exception as e:
-        return {
-            "message": f"Error uploading {file.filename}: {str(e)}"
-        }
+
+    file_path = f"data/medical_docs/{file.filename}"
+
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(
+            file.file,
+            buffer
+        )
+
+    return {
+        "message": f"{file.filename} uploaded"
+    }
